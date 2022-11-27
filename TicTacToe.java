@@ -59,12 +59,13 @@ public class TicTacToe{
                 tictacBoard[5][12] = symbol;
                 break;
             default:
-                System.out.println("INVALID ENTRY");
+                System.out.println("\n> INVALID ENTRY");
                 break;
         }
     }
 
     public static String tictactoeWin(){
+
         List topRow = Arrays.asList(1, 2, 3);
         List midRow = Arrays.asList(4, 5, 6);
         List botRow = Arrays.asList(7, 8, 9);
@@ -77,6 +78,7 @@ public class TicTacToe{
         List rightCol = Arrays.asList(3, 6, 9);
 
         List<List> winningCondition = new ArrayList<List>();
+
         winningCondition.add(topRow);
         winningCondition.add(midRow);
         winningCondition.add(botRow);
@@ -88,14 +90,16 @@ public class TicTacToe{
         winningCondition.add(midCol);
         winningCondition.add(rightCol);
 
+        if (playerPositions.size() + cpuPositions.size() == 9) {
+            return "\n> TIE";
+        }
+
         for (List l : winningCondition){
             if (playerPositions.containsAll(l)){
-                return "PLAYER WIN";
+                return "\n> PLAYER WIN";
             } else if (cpuPositions.containsAll(l)){
-                return "CPU WIN";
-            } else if (playerPositions.size() + cpuPositions.size() == 9){
-                return "TIE";
-            } 
+                return "\n> CPU WIN";
+            }
         }
         return "";
     }
@@ -103,6 +107,17 @@ public class TicTacToe{
     public static void main(String[] args){
 
         Scanner input = new Scanner(System.in);
+
+        /*
+         TicTacToe Grid Design
+         +---+---+---+
+         | X | O | O |
+         +---+---+---+
+         | X | O | X |
+         +---+---+---+
+         | X | X | O |
+         +---+---+---+
+         */
 
         char [][] tictacBoard = {{' ',' ','+', '-', '-', '-','+', '-', '-', '-','+', '-', '-', '-','+'},
                                  {' ',' ','|', ' ', ' ', ' ','|', ' ', ' ', ' ','|', ' ', ' ', ' ','|'},
@@ -112,16 +127,17 @@ public class TicTacToe{
                                  {' ',' ','|', ' ', ' ', ' ','|', ' ', ' ', ' ','|', ' ', ' ', ' ','|'},
                                  {' ',' ','+', '-', '-', '-','+', '-', '-', '-','+', '-', '-', '-','+'}};
 
+        System.out.println("");
         printTicTacBoard(tictacBoard);
 
         while(true){
 
             Scanner scan = new Scanner(System.in);
 
-            System.out.println("Enter position 1-9");
+            System.out.print("\n> ENTER POSITION (1-9): ");
             int playerPosition = input.nextInt();
             while(playerPositions.contains(playerPosition) || cpuPositions.contains(playerPosition)){
-                System.out.println("POSITION TAKEN! RETRY!");
+                System.out.println("\n> POSITION TAKEN! RETRY!");
                 playerPosition = scan.nextInt();
             }
 
@@ -140,6 +156,7 @@ public class TicTacToe{
             placePiece(tictacBoard, cpuPosition, "cpu");
 
             // Call printTicTacBoard Method
+            System.out.println("");
             printTicTacBoard(tictacBoard);
 
             result = tictactoeWin();
@@ -147,23 +164,8 @@ public class TicTacToe{
                 System.out.println(result);
                 break;
             }
-
         }
-
-        
-
-        //placePosition(tictacBoard, position, "cpu");
-
-
-        /*
-         +---+---+---+
-         | X | O | O |
-         +---+---+---+
-         | X | O | X |
-         +---+---+---+
-         | X | X | O |
-         +---+---+---+
-         */
-
+        System.out.println("");
+        printTicTacBoard(tictacBoard);
     }
 }
